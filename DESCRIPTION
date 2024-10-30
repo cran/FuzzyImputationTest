@@ -1,7 +1,7 @@
 Package: FuzzyImputationTest
 Type: Package
 Title: Imputation Procedures and Quality Tests for Fuzzy Data
-Version: 0.3.3
+Version: 0.3.4
 Authors@R: c(
     person("Maciej", "Romaniuk", email = "mroman@ibspan.waw.pl",
     role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X"))
@@ -16,8 +16,8 @@ RoxygenNote: 7.3.2
 Depends: R (>= 3.5.0)
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Packaged: 2024-10-09 06:51:27 UTC; mroman
+Packaged: 2024-10-30 07:42:00 UTC; mroman
 Author: Maciej Romaniuk [cre, aut] (<https://orcid.org/0000-0001-9649-396X>)
 Maintainer: Maciej Romaniuk <mroman@ibspan.waw.pl>
 Repository: CRAN
-Date/Publication: 2024-10-09 07:00:07 UTC
+Date/Publication: 2024-10-30 08:40:06 UTC
