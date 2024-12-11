@@ -103,25 +103,76 @@
 StatisticalMeasures <- function(trueData,imputedData,imputedMask,...)
 {
   
+  # checking parameters
+  
+  if(!(is.data.frame(trueData) | is.matrix(trueData)))
+  {
+    stop("Parameter trueData should be a data frame or a matrix!")
+  }
+  
+  if(!(is.data.frame(imputedData) | is.matrix(imputedData)))
+  {
+    stop("Parameter imputedData should be a data frame or a matrix!")
+  }
+  
+  
+  if(!(is.data.frame(imputedMask) | is.matrix(imputedMask)))
+  {
+    stop("Parameter imputedMask should be a data frame or a matrix!")
+  }
+  
+  
+  
+  
   # conversions
   
   if(is.data.frame(trueData))
   {
-    trueData <- data.matrix(trueData)
+    trueData <- as.matrix(trueData)
     
   } 
   
   if(is.data.frame(imputedData))
   {
-    imputedData <- data.matrix(imputedData)
+    imputedData <- as.matrix(imputedData)
     
   } 
   
   if(is.data.frame(imputedMask))
   {
-    imputedMask <- data.matrix(imputedMask)
+    imputedMask <- as.matrix(imputedMask)
     
   } 
+  
+  # checking parameters
+  
+  if (!is.numeric(trueData))
+  {
+    stop("Parameter trueData should have numerical values!")
+  }
+  
+  if (!is.numeric(imputedData))
+  {
+    stop("Parameter imputedData should have numerical values!")
+  }
+  
+  if (!is.logical(imputedMask))
+  {
+    stop("Parameter imputedMask should have logical values!")
+  }
+  
+  if(!(ncol(trueData) == ncol(imputedData)) & !(ncol(imputedData) == ncol(imputedMask)))
+  {
+    stop("The parameters trueData, imputedData, imputedMask should have the same number of columns!")
+  }
+  
+  
+  if(!(nrow(trueData) == nrow(imputedData)) & !(nrow(imputedData) == nrow(imputedMask)))
+  {
+    stop("The parameters trueData, imputedData, imputedMask should have the same number of rows!")
+  }
+  
+  
   
   variableNumber <- ncol(trueData)
   

@@ -205,7 +205,7 @@ test_that("Function reports errors", {
   
   expect_error(ErrorMatrix(trueData=0.53,imputedData=testMatrix1,imputedMask=testMatrix1Mask),
                
-               "Parameter trueData should be a data frame or a matrix!")
+               "Parameter trueData should be a data frame or a matrix or a list!")
   
   
   expect_error(ErrorMatrix(trueData=testMatrixBad,imputedData=testMatrix1,imputedMask=testMatrix1Mask),
@@ -223,7 +223,7 @@ test_that("Function reports errors", {
   
   expect_error(ErrorMatrix(trueData=testMatrix1,imputedData=testMatrixBadC,imputedMask=testMatrix1Mask),
                
-               "The parameters trueData, imputedData, imputedMask should have the same number of columns!")
+               "The parameters trueData, imputedData, imputedMask should have the same number of rows!")
   
   
   

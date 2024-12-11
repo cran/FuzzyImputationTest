@@ -31,7 +31,7 @@
 #'
 #'
 #'
-#' @param trueData Name of the input matrix (or data frame) with the true values of the variables.
+#' @param trueData Name of the input matrix (or data frame, or list) with the true values of the variables.
 #'
 #'
 #' @param imputedData Name of the input matrix (or data frame) with the imputed values.
@@ -103,29 +103,86 @@
 ImputationTests <- function(trueData,imputedData,imputedMask,trapezoidal=TRUE,
                             cutsNumber=100,K=50,...)
 {
+  # checking parameters
+  
+  if(!(is.data.frame(trueData) | is.matrix(trueData) | is.list(trueData)))
+  {
+    stop("Parameter trueData should be a data frame, a matrix or a list!")
+  }
+  
+  if(!(is.data.frame(imputedData) | is.matrix(imputedData)))
+  {
+    stop("Parameter imputedData should be a data frame or a matrix!")
+  }
+  
+  
+  if(!(is.data.frame(imputedMask) | is.matrix(imputedMask)))
+  {
+    stop("Parameter imputedMask should be a data frame or a matrix!")
+  }
+  
+  
+  if ((length(trapezoidal)!=1 || (is.na(trapezoidal)) || (!is.logical(trapezoidal))))
+  {
+    stop("Parameter trapezoidal should be a single logical value!")
+  }
+  
+  
   # conversions
   
   if(is.data.frame(trueData))
   {
-    trueData <- data.matrix(trueData)
+    trueData <- as.matrix(trueData)
     
   } 
   
   if(is.data.frame(imputedData))
   {
-    imputedData <- data.matrix(imputedData)
+    imputedData <- as.matrix(imputedData)
     
   } 
   
   if(is.data.frame(imputedMask))
   {
-    imputedMask <- data.matrix(imputedMask)
+    imputedMask <- as.matrix(imputedMask)
     
   } 
   
- 
+  if(is.list(trueData) && !is.data.frame(trueData))
+  {
+    # conversion to matrix
+    
+    trueData <- FuzzyNumbersToMatrix(trueData,trapezoidal = trapezoidal,...)
+    
+  } 
+  
+  # checking parameters
+  
+  if (!is.numeric(trueData))
+  {
+    stop("Parameter trueData should have numerical values!")
+  }
+  
+  if (!is.numeric(imputedData))
+  {
+    stop("Parameter imputedData should have numerical values!")
+  }
+  
+  if (!is.logical(imputedMask))
+  {
+    stop("Parameter imputedMask should have logical values!")
+  }
+  
+  if(!(ncol(trueData) == ncol(imputedData)) & !(ncol(imputedData) == ncol(imputedMask)))
+  {
+    stop("The parameters trueData, imputedData, imputedMask should have the same number of columns!")
+  }
   
   
+  if(!(nrow(trueData) == nrow(imputedData)) & !(nrow(imputedData) == nrow(imputedMask)))
+  {
+    stop("The parameters trueData, imputedData, imputedMask should have the same number of rows!")
+  }
   
   variableNumber <- ncol(trueData)
   
@@ -142,7 +199,7 @@ ImputationTests <- function(trueData,imputedData,imputedMask,trapezoidal=TRUE,
   
   # calculate the error matrix
   
-  errorMatrix <- ErrorMatrix(trueData,imputedData,imputedMask,...)
+  errorMatrix <- ErrorMatrix(trueData,imputedData,imputedMask,trapezoidal=trapezoidal,...)
   
   # to do
   
