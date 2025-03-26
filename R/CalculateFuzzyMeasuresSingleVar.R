@@ -1,6 +1,6 @@
 # calculate all fuzzy distances for the pairs of fuzzy numbers for single variable
 
-CalculateFuzzyMeasuresSingleVar <- function(fuzzyMatrix1,fuzzyMatrix2,imputedMask,trapezoidal)
+CalculateFuzzyMeasuresSingleVar <- function(fuzzyMatrix1,fuzzyMatrix2,imputedMask,trapezoidal,theta)
 {
   # create vector for output
   
@@ -22,13 +22,15 @@ CalculateFuzzyMeasuresSingleVar <- function(fuzzyMatrix1,fuzzyMatrix2,imputedMas
   
   trueFNRowsNumbers <- which(apply(fuzzyMatrix2Imp, MARGIN=1, FUN=IsFuzzy, trapezoidal=trapezoidal) == TRUE)
   
+  # cat("trueFNRowsNumbers: ", trueFNRowsNumbers, "\n")
+  
   # cat("rowsNumbersImputed: ", rowsNumbersImputed, "\n")
   
-  fuzzyMatrix1Imp <- fuzzyMatrix1[trueFNRowsNumbers,]
+  fuzzyMatrix1Imp <- fuzzyMatrix1Imp[trueFNRowsNumbers,]
   
   # print(fuzzyMatrix1Imp)
   
-  fuzzyMatrix2Imp <- fuzzyMatrix2[trueFNRowsNumbers,]
+  fuzzyMatrix2Imp <- fuzzyMatrix2Imp[trueFNRowsNumbers,]
   
   # print(fuzzyMatrix2Imp)
   
@@ -41,6 +43,24 @@ CalculateFuzzyMeasuresSingleVar <- function(fuzzyMatrix1,fuzzyMatrix2,imputedMas
     output["AHD"] <-  output["AHD"] + MeasureAHD(fuzzyMatrix1Imp[i,],fuzzyMatrix2Imp[i,],trapezoidal = trapezoidal)
     
     output["HSD"] <-  output["HSD"] + MeasureHSD(fuzzyMatrix1Imp[i,],fuzzyMatrix2Imp[i,],trapezoidal = trapezoidal)
+    
+    # calculate Bertoluzza measure according to if FN is trapezoidal or not
+    
+    if(trapezoidal)
+    {
+      # cat("fuzzyMatrix1Imp[i,]: ", fuzzyMatrix1Imp[i,] , "\n")
+      
+      valueBert <- FuzzyResampling::BertoluzzaDistance(fuzzyMatrix1Imp[i,],fuzzyMatrix2Imp[i,],theta=theta)
+      
+    } else {
+      
+      valueBert <- FuzzyResampling::BertoluzzaDistance(c(fuzzyMatrix1Imp[i,1],fuzzyMatrix1Imp[i,2],fuzzyMatrix1Imp[i,2],fuzzyMatrix1Imp[i,3]),
+                                                       c(fuzzyMatrix2Imp[i,1],fuzzyMatrix2Imp[i,2],fuzzyMatrix2Imp[i,2],fuzzyMatrix2Imp[i,3]),
+                                                       theta=theta)
+
+    }
+
+    output["Bertoluzza"] <-  output["Bertoluzza"] + valueBert
     
     output["DiffVal"] <-  output["DiffVal"] + MeasureCharacteristic(fuzzyMatrix1Imp[i,],fuzzyMatrix2Imp[i,],type="HValue",trapezoidal = trapezoidal)
     

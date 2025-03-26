@@ -5,7 +5,7 @@
 #'
 #' @details
 #' The procedure calculates different types of the distance measures (Euclidean - the Euclidean measure,
-#' AHD - the AHD measure, HSD - the HSD measure), and means of the absolute differences for various fuzzy characteristics
+#' AHD - the AHD measure, HSD - the HSD measure, Bertoluzza - the Bertoluzza distance), and means of the absolute differences for various fuzzy characteristics
 #' (DiffVal - the difference of the value, DiffAmb - the ambiguity, DiffEV - the expected value, DiffWidth - the width)
 #' between two datasets - the first one with true values (set by \code{trueData}), and the second one (specified by \code{imputedData}) with
 #' the imputed variables.
@@ -32,6 +32,8 @@
 #' @param imputedMask Matrix (or data frame) with logical values where \code{TRUE} indicates the cells with the imputed values.
 #' 
 #' @param trapezoidal Logical value depending on the type of fuzzy values (triangular or trapezoidal ones) in the dataset.
+#' 
+#' @param theta The weight for the Bertoluzza measure.
 #' 
 #' @param ... Additional parameters passed to other functions.
 #'
@@ -86,7 +88,7 @@
 
 
 
-CalculateFuzzyMeasures <- function(trueData,imputedData,imputedMask,trapezoidal=TRUE,...)
+CalculateFuzzyMeasures <- function(trueData,imputedData,imputedMask,trapezoidal=TRUE,theta=1/3,...)
 {
   # checking parameters
   
@@ -215,7 +217,7 @@ CalculateFuzzyMeasures <- function(trueData,imputedData,imputedMask,trapezoidal=
     outputSingleVar <- CalculateFuzzyMeasuresSingleVar(trueData[,rangeToCheck],
                                                        imputedData[,rangeToCheck],
                                                        imputedMask[,rangeToCheck],
-                                                       trapezoidal=trapezoidal)
+                                                       trapezoidal=trapezoidal,theta=theta)
     
     # input to the output matrix
     

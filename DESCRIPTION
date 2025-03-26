@@ -1,7 +1,7 @@
 Package: FuzzyImputationTest
 Type: Package
 Title: Imputation Procedures and Quality Tests for Fuzzy Data
-Version: 0.4.0
+Version: 0.5.0
 Authors@R: c(
     person("Maciej", "Romaniuk", email = "mroman@ibspan.waw.pl",
     role = c("cre","aut"),comment = c(ORCID = "0000-0001-9649-396X"))
@@ -10,14 +10,14 @@ Description: Special procedures for the imputation of missing fuzzy numbers are 
 License: GPL-3
 NeedsCompilation: yes
 Imports: stats, methods, FuzzySimRes, FuzzyNumbers, missForest,
-        miceRanger, VIM, utils
+        miceRanger, VIM, utils, FuzzyResampling, mice
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 Depends: R (>= 3.5.0)
 Suggests: testthat (>= 3.0.0)
 Config/testthat/edition: 3
-Packaged: 2025-01-24 15:05:02 UTC; mroman
+Packaged: 2025-03-26 07:42:06 UTC; mroman
 Author: Maciej Romaniuk [cre, aut] (<https://orcid.org/0000-0001-9649-396X>)
 Maintainer: Maciej Romaniuk <mroman@ibspan.waw.pl>
 Repository: CRAN
-Date/Publication: 2025-01-24 15:20:01 UTC
+Date/Publication: 2025-03-26 08:00:01 UTC

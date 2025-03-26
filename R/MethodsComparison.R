@@ -9,7 +9,7 @@
 #' To minimize random effects, each analysis is repeated \code{iterations} times with the new randomly generated NA values
 #' in the input dataset, and then new imputed values for all built-in methods.
 #' To generate the new NAs values, the function \code{IntroducingNA} is used.
-#' Next, the results, the same as for\code{ImputationTests} (apart from \code{trueValues} and \code{mask}), are averaged.
+#' Next, the results, the same as for\code{ImputationTests} (apart from \code{trueValues} and \code{mask}), are averaged and their standard errors calculated (see the column \code{se}).
 #' 
 #' The input dataset can be given as matrix or data frame.
 #' 
@@ -181,6 +181,8 @@ MethodsComparison <- function(trueData,iterations=100,percentage=0.05,trapezoida
     
     imputedDataKnn <- FuzzyImputation(dataToImpute = dataWithNA,method = "knn", trapezoidal = trapezoidal,verbose = FALSE,...)
     
+    imputedDataPmm <- FuzzyImputation(dataToImpute = dataWithNA,method = "pmm", trapezoidal = trapezoidal,verbose = FALSE,pmmWarnings=FALSE,...)
+    
     # check quality
     
     qualityDimp <- ImputationTests(trueData = trueData,imputedData = imputedDataDimp,
@@ -195,31 +197,38 @@ MethodsComparison <- function(trueData,iterations=100,percentage=0.05,trapezoida
     qualityKnn <- ImputationTests(trueData = trueData,imputedData = imputedDataKnn,
                                    imputedMask=imputationMask,trapezoidal = trapezoidal,...)
     
+    qualityPmm <- ImputationTests(trueData = trueData,imputedData = imputedDataPmm,
+                                  imputedMask=imputationMask,trapezoidal = trapezoidal,...)
+    
     # print(qualityDimp)
     
     # create new output or add to the previous one
     
     if(i==1) 
     {
-      outputQualityDimp <- qualityDimp[c(3:7)]
+      outputQualityDimp <- PrepareDataForComparison(qualityDimp)
       
-      outputQualityMF <- qualityMF[c(3:7)]
+      outputQualityMF <- PrepareDataForComparison(qualityMF)
       
-      outputQualityMiceR <- qualityMiceR[c(3:7)]
+      outputQualityMiceR <- PrepareDataForComparison(qualityMiceR)
       
-      outputQualityKnn <- qualityKnn[c(3:7)]
+      outputQualityKnn <- PrepareDataForComparison(qualityKnn)
+      
+      outputQualityPmm <- PrepareDataForComparison(qualityPmm)
       
       # print(outputQualityDimp)
       
     } else {
       
-      outputQualityDimp <- mapply("+", qualityDimp[c(3:7)],outputQualityDimp)
+      outputQualityDimp <- mapply("+", PrepareDataForComparison(qualityDimp),outputQualityDimp)
       
-      outputQualityMF <- mapply("+", qualityMF[c(3:7)],outputQualityMF)
+      outputQualityMF <- mapply("+", PrepareDataForComparison(qualityMF),outputQualityMF)
       
-      outputQualityMiceR <- mapply("+", qualityMiceR[c(3:7)],outputQualityMiceR)
+      outputQualityMiceR <- mapply("+", PrepareDataForComparison(qualityMiceR),outputQualityMiceR)
       
-      outputQualityKnn <- mapply("+", qualityKnn[c(3:7)],outputQualityKnn)
+      outputQualityKnn <- mapply("+", PrepareDataForComparison(qualityKnn),outputQualityKnn)
+      
+      outputQualityPmm <- mapply("+", PrepareDataForComparison(qualityPmm),outputQualityPmm)
       
       # print(outputQualityDimp)
 
@@ -257,10 +266,25 @@ MethodsComparison <- function(trueData,iterations=100,percentage=0.05,trapezoida
   
   outputQualityKnn <- mapply("/", outputQualityKnn,iterations)
   
+  outputQualityPmm <- mapply("/", outputQualityPmm,iterations)
+  
+  # calculation of the standard errors
+  
+  outputQualityDimp <- CalculateSE(outputQualityDimp, iterations=iterations)
+  
+  outputQualityMF <- CalculateSE(outputQualityMF, iterations=iterations)
+  
+  outputQualityMiceR <- CalculateSE(outputQualityMiceR, iterations=iterations)
+  
+  outputQualityKnn <- CalculateSE(outputQualityKnn, iterations=iterations)
+  
+  outputQualityPmm <- CalculateSE(outputQualityPmm, iterations=iterations)
+  
   outputList <- list(dimp=outputQualityDimp,
                      missForest=outputQualityMF,
                      miceRanger=outputQualityMiceR,
-                     knn=outputQualityKnn)
+                     knn=outputQualityKnn,
+                     pmm=outputQualityPmm)
   
   return(structure(outputList,class="metComp"))
   
