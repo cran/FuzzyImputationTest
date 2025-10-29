@@ -1,4 +1,4 @@
-e49e86c7703933cd74ec67692b6d753c *DESCRIPTION
+f6bb4eec192647b8e7a22d0609cb7537 *DESCRIPTION
 68b3e36e61d3256e2ade81c1526bc0e2 *NAMESPACE
 6bf721ddc2e28fc53566bde9969c995d *R/ApplyStatisticalTests.R
 5c669509a7303e139b32d1b1b275f4ff *R/ApplyStatisticalTestsSingleVar.R
@@ -7,8 +7,8 @@ e49e86c7703933cd74ec67692b6d753c *DESCRIPTION
 8453029b9041e5dc69538005b6d52ae8 *R/CalculateSE.R
 19cf5c21e7ed0979bc65e359c48d99e8 *R/ErrorMatrix.R
 40d00e0d3761f1ac9a02c0b6f4c81a70 *R/FuzzifyMatrix.R
-084255f5af1b06eb9f48e11cbad332ff *R/FuzzyImputation.R
-0395320906b002b0daae502478879714 *R/FuzzyNumbersToMatrix.R
+3afb6de198d535c81f01e4e0312bfb54 *R/FuzzyImputation.R
+0d0464e74a627be7ac68d07e1edf5a87 *R/FuzzyNumbersToMatrix.R
 42da74c03ae30ce50eabe85f795e4b57 *R/ImputationDimp.R
 824a3d68693963ee2e0824d3e5534d79 *R/ImputationDimpSingleVar.R
 70cc20cd838893726781ebf035495050 *R/ImputationTests.R
@@ -33,7 +33,7 @@ adafa60b847feab5576812b2ab078ef0 *R/methodNames.R
 caf4d8e389ffeb0ac7506a8bbc32ea22 *man/CalculateFuzzyMeasures.Rd
 755ad78d58914ec12b1a7acee7f78069 *man/ErrorMatrix.Rd
 ab483637b40ed6a3e49132afc99a642d *man/FuzzifyMatrix.Rd
-8202c855addfa5d0116a670e286ae505 *man/FuzzyImputation.Rd
+bbadf7c8eaeb70f922abc400eaf65489 *man/FuzzyImputation.Rd
 0728ba21da48b56cab22f04fe8c31b47 *man/FuzzyNumbersToMatrix.Rd
 f97cf1fb4d17e9f06aaeccfbed32c964 *man/ImputationDimp.Rd
 e0f042a7bb988f8ccaea5c7f9db29405 *man/ImputationTests.Rd
@@ -53,8 +53,8 @@ baceaf83a99de66e5590402be17d686f *tests/testthat/_snaps/ApplyStatisticalTests.md
 c9cde15543177d561db90a7a97fe9dfa *tests/testthat/_snaps/CalculateFuzzyMeasures.md
 4f792312b006e22ca5973a45b83bb568 *tests/testthat/_snaps/ErrorMatrix.md
 29d0c53da9dd994b85323bb07e82b1c2 *tests/testthat/_snaps/FuzzifyMatrix.md
-9309823a59f3cdd2fba9648f9768c664 *tests/testthat/_snaps/FuzzyImputation.md
-4b56323876475de4fecbcc7cb0e1ac3f *tests/testthat/_snaps/FuzzyNumbersToMatrix.md
+eeb3938b9f982ec0abf1867fb0cf30ee *tests/testthat/_snaps/FuzzyImputation.md
+d37875acf75b17460a532fe1b48ca5f6 *tests/testthat/_snaps/FuzzyNumbersToMatrix.md
 471923d70145b1ff9be089f365d5fca3 *tests/testthat/_snaps/ImputationDimp.md
 7fadf5a0758192db5d3bf6983cda617e *tests/testthat/_snaps/ImputationTests.md
 a5597b4401b9bf260a6927e672a65975 *tests/testthat/_snaps/IntroducingNA.md
@@ -62,14 +62,14 @@ a5597b4401b9bf260a6927e672a65975 *tests/testthat/_snaps/IntroducingNA.md
 bac9065fbd0506f0cd0e481b94fa05f1 *tests/testthat/_snaps/MeasureAHD.md
 985adf492dd281c61723a0767f59b768 *tests/testthat/_snaps/MeasureEuclidean.md
 b6958a13ed599d3ad466e427e95178f7 *tests/testthat/_snaps/MeasureHSD.md
-47660e22a611403d1a6943f0748e25ee *tests/testthat/_snaps/MethodsComparison.md
+fa500aaea931bbb2c034deab99718095 *tests/testthat/_snaps/MethodsComparison.md
 7dbb981c79f90436ef796a4c05e5e4a4 *tests/testthat/_snaps/RemoveNotFuzzy.md
 ceb1955483265247b8381a7e35c45b0d *tests/testthat/_snaps/StatisticalMeasures.md
 365c8723f0a27a1b77e427a064bb0310 *tests/testthat/test-ApplyStatisticalTests.R
 d2ef648b186fc4510af73f96b58ffd00 *tests/testthat/test-CalculateFuzzyMeasures.R
 0eff825e4119a552a923df8a2f467e6d *tests/testthat/test-ErrorMatrix.R
 0c3e6968aee807d1b73b2ea8af98a845 *tests/testthat/test-FuzzifyMatrix.R
-549db447b6be5861e53542044d428604 *tests/testthat/test-FuzzyImputation.R
+c66000f855d149c3e727bef4db0059d3 *tests/testthat/test-FuzzyImputation.R
 810f8ec5f2df084413fa0ebfd6498585 *tests/testthat/test-FuzzyNumbersToMatrix.R
 5810801c984f5a2b3032248494e19af2 *tests/testthat/test-ImputationDimp.R
 2f5a0c02005f03624c36cbdf1d93711a *tests/testthat/test-ImputationTests.R
@@ -78,6 +78,6 @@ d2ef648b186fc4510af73f96b58ffd00 *tests/testthat/test-CalculateFuzzyMeasures.R
 37be5c1225618d007b54844ddcec9854 *tests/testthat/test-MeasureAHD.R
 972dcfa03af5436748f4b72a5a05f523 *tests/testthat/test-MeasureEuclidean.R
 8cfcd6f635399dc1aef7b1780f9cafcd *tests/testthat/test-MeasureHSD.R
-8db3ab7369692a2e1e6b2789d5f0f45f *tests/testthat/test-MethodsComparison.R
+da71ffe487623b7f87a108b7060fb8f9 *tests/testthat/test-MethodsComparison.R
 d9d4abe9ae849dca5419f784e921f075 *tests/testthat/test-RemoveNotFuzzy.R
 cbc79f46b0163383ff1df9dafaa142b8 *tests/testthat/test-StatisticalMeasures.R
